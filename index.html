@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D-Medical Solutions | 小規模医療機関向けBCP・ハザードマップ安否確認アプリ</title>
+<meta name="description" content="救急専門医・DMATが開発した小規模医療機関向け無料ITツール。BCP（業務継続計画）自動生成アプリ・ハザードマップ安否確認アプリを無償公開。Excel入力だけでBCP文書を自動生成、PDF/Word保存可能。">
+<meta name="keywords" content="BCP自動生成,業務継続計画,医療機関BCP,ハザードマップ,安否確認,在宅医療,訪問診療,小規模クリニック,診療所BCP,訪問看護BCP,医療IT,無料BCP">
+<meta name="author" content="D-Medical Solutions / Dr.daichance">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://daichance-med.github.io/d-medical-solutions/">
+
+<!-- OGP (Open Graph) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="D-Medical Solutions | 小規模医療機関向けBCP・ハザードマップ安否確認アプリ">
+<meta property="og:description" content="救急専門医・DMATが開発した小規模医療機関向け無料ITツール。BCP自動生成アプリ・ハザードマップ安否確認アプリを無償公開。">
+<meta property="og:url" content="https://daichance-med.github.io/d-medical-solutions/">
+<meta property="og:site_name" content="D-Medical Solutions">
+<meta property="og:locale" content="ja_JP">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="D-Medical Solutions | 小規模医療機関向けBCP・ハザードマップ安否確認アプリ">
+<meta name="twitter:description" content="救急専門医・DMATが開発した小規模医療機関向け無料ITツール。BCP自動生成アプリ・ハザードマップ安否確認アプリを無償公開。">
+
+<!-- 構造化データ (JSON-LD) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "D-Medical Solutions",
+  "url": "https://daichance-med.github.io/d-medical-solutions/",
+  "description": "救急専門医・DMATが開発した小規模医療機関向け医療ITツールの開発・提供",
+  "founder": {
+    "@type": "Person",
+    "name": "Dr.daichance",
+    "jobTitle": "救急科専門医・日本DMAT"
+  },
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "BCP自動生成アプリ",
+      "price": "0",
+      "priceCurrency": "JPY",
+      "description": "小規模医療機関向けBCP（業務継続計画）自動生成Webアプリ"
+    },
+    {
+      "@type": "Offer",
+      "name": "ハザードマップ安否確認アプリ",
+      "price": "0",
+      "priceCurrency": "JPY",
+      "description": "患者安否確認とハザードマップを統合したWebアプリ"
+    }
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Raleway:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:   #1F4E79;
+    --blue:   #2E74B5;
+    --sky:    #BDD7EE;
+    --green:  #375623;
+    --lgreen: #E2EFDA;
+    --white:  #FFFFFF;
+    --off:    #F7FAFD;
+    --text:   #1A2733;
+    --muted:  #607080;
+    --border: #D6E4F0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 60px; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    color: var(--text);
+    background: var(--white);
+    line-height: 1.7;
+  }
+
+  /* ── ナビ ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    line-height: 1;
+  }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a {
+    font-size: 13px; color: var(--muted); text-decoration: none;
+    font-weight: 500; letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--navy); }
+
+  /* ── ヒーロー ── */
+  #hero {
+    min-height: 100vh;
+    background: linear-gradient(160deg, var(--navy) 0%, #2E74B5 55%, #1a5c8a 100%);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 100px 5% 80px;
+    position: relative;
+  }
+  #hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 40% at 80% 20%, rgba(189,215,238,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(55,86,35,0.2) 0%, transparent 60%);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: var(--sky);
+    font-size: 11px; letter-spacing: 0.15em;
+    padding: 6px 18px; border-radius: 100px;
+    margin-bottom: 28px;
+    font-weight: 500;
+  }
+  .hero-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 700; color: var(--white);
+    line-height: 1.4; margin-bottom: 8px;
+    position: relative;
+  }
+  .hero-title span { color: var(--sky); }
+  .hero-sub {
+    font-size: clamp(15px, 2vw, 20px);
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 48px; font-weight: 300;
+  }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .btn-primary {
+    background: var(--white); color: var(--navy);
+    padding: 14px 32px; border-radius: 6px;
+    font-size: 14px; font-weight: 700;
+    text-decoration: none; letter-spacing: 0.05em;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    border: none; cursor: pointer; font-family: inherit;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+  .btn-outline {
+    background: transparent; color: var(--white);
+    padding: 14px 32px; border-radius: 6px;
+    border: 1.5px solid rgba(255,255,255,0.5);
+    font-size: 14px; font-weight: 500;
+    text-decoration: none; letter-spacing: 0.05em;
+    transition: background 0.2s, border-color 0.2s;
+    cursor: pointer; font-family: inherit;
+  }
+  .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.8); }
+  .hero-scroll {
+    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+    color: rgba(255,255,255,0.4); font-size: 11px; letter-spacing: 0.12em;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+  }
+  .hero-scroll::after {
+    content: '';
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+  }
+
+  /* ── セクション共通 ── */
+  section { padding: 96px 5%; }
+  .section-label {
+    font-size: 11px; letter-spacing: 0.2em;
+    color: var(--blue); font-weight: 700;
+    text-transform: uppercase; margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(22px, 3vw, 34px);
+    font-weight: 700; color: var(--navy);
+    line-height: 1.4; margin-bottom: 16px;
+  }
+  .section-desc {
+    font-size: 15px; color: var(--muted);
+    max-width: 600px; margin-bottom: 56px;
+    line-height: 1.9;
+  }
+
+  /* ── 課題セクション ── */
+  #problem { background: var(--off); }
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px; max-width: 960px; margin: 0 auto;
+  }
+  .problem-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 32px;
+    border-top: 3px solid var(--blue);
+  }
+  .problem-card .icon { font-size: 28px; margin-bottom: 16px; }
+  .problem-card h3 {
+    font-size: 15px; font-weight: 700;
+    color: var(--navy); margin-bottom: 10px;
+  }
+  .problem-card p { font-size: 13px; color: var(--muted); line-height: 1.8; }
+
+  /* ── アプリセクション ── */
+  #apps { background: var(--white); }
+  .apps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px; max-width: 960px; margin: 0 auto;
+  }
+  .app-card {
+    border: 1.5px solid var(--border);
+    border-radius: 16px; overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .app-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(31,78,121,0.12); }
+  .app-card-header {
+    padding: 32px 28px 24px;
+    background: linear-gradient(135deg, var(--navy), var(--blue));
+    color: var(--white);
+  }
+  .app-card-header.green {
+    background: linear-gradient(135deg, var(--green), #4e7a30);
+  }
+  .app-icon { font-size: 36px; margin-bottom: 12px; }
+  .app-name { font-family: 'Noto Serif JP', serif; font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+  .app-ver {
+    display: inline-block;
+    background: rgba(255,255,255,0.2); border-radius: 4px;
+    font-size: 10px; padding: 2px 8px; letter-spacing: 0.1em;
+  }
+  .app-card-body { padding: 28px; }
+  .app-desc { font-size: 13.5px; color: var(--muted); line-height: 1.85; margin-bottom: 20px; }
+  .app-features { list-style: none; margin-bottom: 24px; }
+  .app-features li {
+    font-size: 12.5px; color: var(--text);
+    padding: 5px 0; border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+  .app-features li::before { content: '✓'; color: var(--blue); font-weight: 700; flex-shrink: 0; }
+  .app-features li.green-check::before { color: var(--green); }
+  .app-link {
+    display: inline-block;
+    background: var(--navy); color: var(--white);
+    padding: 10px 22px; border-radius: 6px;
+    font-size: 13px; font-weight: 700;
+    text-decoration: none; letter-spacing: 0.04em;
+    transition: background 0.2s;
+  }
+  .app-link:hover { background: var(--blue); }
+  .app-link.green { background: var(--green); }
+  .app-link.green:hover { background: #4e7a30; }
+  .pwyw-badge {
+    display: inline-block;
+    background: var(--lgreen); color: var(--green);
+    border: 1px solid #a8c898;
+    font-size: 11px; font-weight: 700; padding: 4px 10px;
+    border-radius: 4px; margin-left: 8px; vertical-align: middle;
+  }
+
+  /* ── BCPアラートバー ── */
+  .alert-bar {
+    background: linear-gradient(90deg, #C00000, #9B0000);
+    color: var(--white); padding: 20px 5%;
+    text-align: center;
+  }
+  .alert-bar strong { font-size: 15px; }
+  .alert-bar p { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+
+  /* ── 開発者 ── */
+  #about { background: var(--off); }
+  .about-inner {
+    max-width: 800px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 2fr;
+    gap: 56px; align-items: center;
+  }
+  .about-icon-wrap {
+    background: linear-gradient(135deg, var(--navy), var(--blue));
+    border-radius: 20px; padding: 40px;
+    display: flex; align-items: center; justify-content: center;
+    aspect-ratio: 1;
+  }
+  .about-icon { font-size: 64px; }
+  .about-brand {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 11px; letter-spacing: 0.2em;
+    color: var(--blue); margin-bottom: 8px; font-weight: 600;
+  }
+  .about-name { font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 16px; }
+  .about-text { font-size: 14px; color: var(--muted); line-height: 1.9; margin-bottom: 20px; }
+  .about-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    background: var(--white); border: 1px solid var(--border);
+    color: var(--navy); font-size: 11.5px;
+    padding: 4px 12px; border-radius: 100px; font-weight: 500;
+  }
+
+  /* ── お問い合わせ ── */
+  #contact { background: var(--navy); text-align: center; }
+  #contact .section-label { color: var(--sky); }
+  #contact .section-title { color: var(--white); }
+  #contact .section-desc { color: rgba(255,255,255,0.65); margin: 0 auto 40px; }
+  .contact-email {
+    display: inline-block;
+    color: var(--sky); font-size: 18px;
+    font-weight: 700; text-decoration: none;
+    border-bottom: 2px solid rgba(189,215,238,0.4);
+    padding-bottom: 4px;
+    transition: border-color 0.2s;
+    letter-spacing: 0.04em;
+  }
+  .contact-email:hover { border-color: var(--sky); }
+  .contact-note { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 20px; }
+
+  /* ── フッター ── */
+  footer {
+    background: #0F2538; color: rgba(255,255,255,0.4);
+    text-align: center; padding: 28px 5%;
+    font-size: 12px; letter-spacing: 0.05em;
+  }
+
+  /* ── レスポンシブ ── */
+  @media (max-width: 640px) {
+    nav { padding: 0 4%; }
+    .nav-links { display: none; }
+    section { padding: 64px 4%; }
+    .about-inner { grid-template-columns: 1fr; gap: 32px; }
+    .about-icon-wrap { max-width: 160px; margin: 0 auto; }
+  }
+
+  /* ── フェードイン ── */
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s, transform 0.6s; }
+  .fade-in.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- ナビ -->
+<nav>
+  <div class="nav-logo">
+    <svg viewBox="0 0 132 97" height="36" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 8,27 L 8,64 L 19,64 C 32,64 40,56 40,45 C 40,34 32,27 19,27 Z" fill="#1F4E79"/>
+      <path d="M 11,30 L 11,61 L 19,61 C 29,61 37,54 37,45 C 37,36 29,30 19,30 Z" fill="#FFFFFF"/>
+      <line x1="11" y1="67" x2="23" y2="67" stroke="#1F4E79" stroke-width="2" stroke-linecap="round"/>
+      <text x="46" y="47" font-family="'Raleway',sans-serif" font-size="15" font-weight="400" fill="#1F4E79" letter-spacing="2">Medical</text>
+      <text x="46" y="64" font-family="'Raleway',sans-serif" font-size="15" font-weight="400" fill="#1F4E79" letter-spacing="1">Solutions</text>
+      <path d="M 6,74 Q 19,66 32,74 Q 45,82 58,74 Q 71,66 84,74 Q 97,82 110,74 Q 120,68 124,74" stroke="#1F4E79" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M 6,87 Q 22,79 40,87 Q 58,95 76,87 Q 94,79 110,87 Q 121,93 124,87" stroke="#375623" stroke-width="1.4" fill="none" stroke-linecap="round" opacity="0.65"/>
+    </svg>
+  </div>
+  <div class="nav-links">
+    <a href="#apps">サービス</a>
+    <a href="#about">開発者</a>
+    <a href="#contact">お問い合わせ</a>
+  </div>
+</nav>
+
+<!-- ヒーロー -->
+<section id="hero">
+  <div class="hero-badge">地域医療 × 医療 IT</div>
+  <h1 class="hero-title">
+    地域医療を支える<br>
+    <span>医療ITツール</span>を届ける
+  </h1>
+  <p class="hero-sub">地域医療の現場から生まれた、現場のためのデジタルツール</p>
+  <div class="hero-btns">
+    <a href="#apps" class="btn-primary">サービスを見る</a>
+    <a href="#contact" class="btn-outline">お問い合わせ</a>
+  </div>
+  <div class="hero-scroll">SCROLL</div>
+</section>
+
+<!-- BCPアラート -->
+<div class="alert-bar">
+  <strong>🔴 2026年6月〜　在支診・機能強化加算クリニックへのBCP策定が義務化されました</strong>
+  <p>経過措置期間：〜2027年5月末　｜　今すぐたたき台を自動生成できます</p>
+</div>
+
+<!-- 課題 -->
+<section id="problem">
+  <div class="section-label fade-in">BACKGROUND</div>
+  <h2 class="section-title fade-in">在宅医療現場が抱える課題</h2>
+  <p class="section-desc fade-in">
+    BCP策定の義務化、大規模災害への備え、多忙な在宅医療現場での情報管理。
+    D-Medical Solutionsはこれらの課題をテクノロジーで解決します。
+  </p>
+  <div class="problem-grid">
+    <div class="problem-card fade-in">
+      <div class="icon">📋</div>
+      <h3>BCPの策定が義務化されたが<br>どこから手をつければいいかわからない</h3>
+      <p>在支診・機能強化加算クリニック約1万7,000か所が対象。策定ノウハウのない現場に向けてたたき台を自動生成します。</p>
+    </div>
+    <div class="problem-card fade-in">
+      <div class="icon">🗺️</div>
+      <h3>訪問患者の災害リスクを<br>一目で把握したい</h3>
+      <p>患者宅の洪水・土砂・津波リスクをマップで可視化。大規模災害時の安否確認・優先訪問順の判断を支援します。</p>
+    </div>
+    <div class="problem-card fade-in">
+      <div class="icon">⏱️</div>
+      <h3>忙しい在宅医療現場に<br>無駄な時間と高すぎる依頼コストはかけられない</h3>
+      <p>Excelに入力してアップロードするだけ。専門知識不要・インターネット不要・個人情報はサーバーに送信しません。</p>
+    </div>
+  </div>
+</section>
+
+<!-- アプリ -->
+<section id="apps">
+  <div class="section-label fade-in">SERVICES</div>
+  <h2 class="section-title fade-in">提供ツール</h2>
+  <p class="section-desc fade-in">
+    いずれも完全ローカル動作・インターネット不要・無料でご利用いただけます。<br>
+    Pay What You Want（任意支援）方式で開発支援を受け付けています。
+  </p>
+  <div class="apps-grid">
+
+    <!-- BCPアプリ -->
+    <div class="app-card fade-in">
+      <div class="app-card-header">
+        <div class="app-icon">📄</div>
+        <div class="app-name">BCP 自動生成アプリ</div>
+        <span class="app-ver">v3.0</span>
+      </div>
+      <div class="app-card-body">
+        <p class="app-desc">
+          Excelに事業所情報を入力してアップロードするだけで、
+          小規模医療機関向けBCP（業務継続計画）のたたき台を自動生成。そのままPDF/Word保存できます。
+          <span class="pwyw-badge">無料 / 任意支援</span>
+        </p>
+        <ul class="app-features">
+          <li>4種の施設種別に対応（外来・訪問・ハイブリッド・訪問看護ST）</li>
+          <li>BCP本文（8章）・アクションカード・備品リスト等6タブを一括生成</li>
+          <li>業務優先度分類シートで第3章を院独自にカスタマイズ</li>
+          <li>完全ローカル動作・個人情報の外部送信ゼロ</li>
+        </ul>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="https://daichance-med.github.io/bcp-generator/BCP_generator_v3.html"
+             target="_blank" rel="noopener" class="app-link">アプリを開く →</a>
+          <a href="https://daichance-med.github.io/d-medical-solutions/%E3%81%95%E3%81%8F%E3%82%89%E5%86%85%E7%A7%91%E3%82%AF%E3%83%AA%E3%83%8B%E3%83%83%E3%82%AF_BCP.pdf"
+             target="_blank" rel="noopener" class="app-link" style="background:#4A7FAA;">📄 サンプルBCPを見る</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ハザードマップアプリ -->
+    <div class="app-card fade-in">
+      <div class="app-card-header green">
+        <div class="app-icon">🗺️</div>
+        <div class="app-name">ハザードマップ安否確認アプリ</div>
+        <span class="app-ver">v2.3.0</span>
+      </div>
+      <div class="app-card-body">
+        <p class="app-desc">
+          訪問患者の住所をマップ上に展開し、洪水・土砂災害・津波の
+          ハザード情報を重ね合わせて可視化。大規模災害時の
+          患者安否確認・優先訪問判断を支援します。<span class="pwyw-badge">無料 / 任意支援</span>
+        </p>
+        <ul class="app-features">
+          <li class="green-check">患者マーカーをリスク別（高・中・低）に色分け表示</li>
+          <li class="green-check">患者名検索・リスク別フィルター機能</li>
+          <li class="green-check">洪水（浸水深）・土砂災害警戒区域・津波浸水想定を重畳</li>
+          <li class="green-check">CSVインポート・地図データJSON保存対応</li>
+        </ul>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="https://daichance-med.github.io/zaitaku-bcp-hazardmap/"
+             target="_blank" rel="noopener" class="app-link green">アプリを開く →</a>
+          <a href="https://daichance-med.github.io/d-medical-solutions/hazardmap_sample.png"
+             target="_blank" rel="noopener" class="app-link green" style="background:#4e7a30;">🗺️ サンプルを見る</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 開発者 -->
+<section id="about">
+  <div class="section-label fade-in">DEVELOPER</div>
+  <h2 class="section-title fade-in">開発者について</h2>
+  <div class="about-inner">
+    <div class="about-icon-wrap fade-in">
+      <div class="about-icon">🩺</div>
+    </div>
+    <div class="fade-in">
+      <div class="about-brand">D-MEDICAL SOLUTIONS / daichance.med</div>
+      <div class="about-name">福井 大治郎</div>
+      <ul style="list-style:none;margin-bottom:16px;display:flex;flex-direction:column;gap:4px;">
+        <li style="font-size:12px;color:var(--blue);font-weight:600;">▶ 日本救急医学会救急科専門医</li>
+        <li style="font-size:12px;color:var(--blue);font-weight:600;">▶ 日本DMAT ／ 統括DMAT</li>
+        <li style="font-size:12px;color:var(--blue);font-weight:600;">▶ 神奈川県県西地域災害医療コーディネーター</li>
+        <li style="font-size:12px;color:var(--blue);font-weight:600;">▶ 日本航空医療学会評議員</li>
+      </ul>
+      <p class="about-text">
+        神奈川県小田原市で外来・訪問診療を行うハイブリッドクリニック
+        「福井内科消化器科クリニック」理事。
+        災害医療の専門家として、在宅医療の現場でBCP策定・災害対応の難しさを実感し、
+        現場の医師・看護師のほか、地域を支える医療関係者が本当に使えるツールを
+        自ら開発することを決意。
+        医療IT・防災・地域医療連携の分野でツール開発・情報発信を続けています。
+      </p>
+      <div class="about-tags">
+        <span class="tag">在宅医療</span>
+        <span class="tag">救急医学</span>
+        <span class="tag">DMAT</span>
+        <span class="tag">災害医療</span>
+        <span class="tag">BCP策定支援</span>
+        <span class="tag">医療IT開発</span>
+        <span class="tag">小田原市</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- お問い合わせ -->
+<section id="contact">
+  <div class="section-label fade-in">CONTACT</div>
+  <h2 class="section-title fade-in">お問い合わせ</h2>
+  <p class="section-desc fade-in">
+    ツールのご利用に関するご質問、請求書の発行、導入支援のご相談など、
+    お気軽にメールにてご連絡ください。
+  </p>
+  <a href="mailto:daichance.med@gmail.com" class="contact-email fade-in">
+    daichance.med@gmail.com
+  </a>
+  <p class="contact-note fade-in">通常2〜3営業日以内にご返信いたします</p>
+</section>
+
+<!-- フッター -->
+<footer>
+  <p>© 2026 D-Medical Solutions / daichance.med　　All Rights Reserved.</p>
+</footer>
+
+<script>
+  // フェードイン
+  document.addEventListener('DOMContentLoaded', function() {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e, i) {
+        if (e.isIntersecting) {
+          setTimeout(function(){ e.target.classList.add('visible'); }, i * 80);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(function(el){ observer.observe(el); });
+  });
+</script>
+</body>
+</html>
